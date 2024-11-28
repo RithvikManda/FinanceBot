@@ -5,9 +5,8 @@ import streamlit as st
 from groq import Groq
 
 
-# streamlit page configuration
 st.set_page_config(
-    page_title="LLAMA 3.1. Chat",
+    page_title="Finance Chat",
     page_icon="🦙",
     layout="centered"
 )
@@ -26,9 +25,8 @@ client = Groq()
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-
 # streamlit page title
-st.title("🦙 LLAMA 3.1. ChatBot")
+st.title("🦙 Finance ChatBot")
 
 # display chat history
 for message in st.session_state.chat_history:
