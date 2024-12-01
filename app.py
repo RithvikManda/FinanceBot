@@ -5,11 +5,11 @@ import streamlit as st
 from groq import Groq
 
 
-df1=pd.read_csv("C:/Users/HP/OneDrive/Desktop/finance/datasets/AAPL_monthly_data.csv") #path to dataset1
-df2=pd.read_csv("C:/Users/HP/OneDrive/Desktop/finance/datasets/AMZN_monthly_data.csv") #path to dataset2
-df3=pd.read_csv("C:/Users/HP/OneDrive/Desktop/finance/datasets/AVGO_monthly_data.csv") #path to dataset3
-df4=pd.read_csv("C:/Users/HP/OneDrive/Desktop/finance/datasets/META_monthly_data.csv") #path to dataset4
-df5=pd.read_csv("C:/Users/HP/OneDrive/Desktop/finance/datasets/MSFT_monthly_data.csv") #path to dataset5
+df1=pd.read_csv("datasets/AAPL_monthly_data.csv") #path to dataset1
+df2=pd.read_csv("datasets/AMZN_monthly_data.csv") #path to dataset2
+df3=pd.read_csv("datasets/AVGO_monthly_data.csv") #path to dataset3
+df4=pd.read_csv("datasets/META_monthly_data.csv") #path to dataset4
+df5=pd.read_csv("datasets/MSFT_monthly_data.csv") #path to dataset5
 
 df1_sample = df1.to_string(index=False)
 df2_sample = df2.to_string(index=False)
