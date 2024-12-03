@@ -6,7 +6,7 @@ from groq import Groq
 
 
 df1=pd.read_csv("dataset/amazon_inv.csv") #path to dataset1
-df2=pd.read_csv("C:/Users/HP/OneDrive/Desktop/finance/dataset/apple_inv.csv") #path to dataset2
+df2=pd.read_csv("dataset/apple_inv.csv") #path to dataset2
 df3=pd.read_csv("dataset/meta_inv.csv") #path to dataset3
 df4=pd.read_csv("dataset/ndx_inv.csv") #path to dataset4
 df5=pd.read_csv("dataset/nvidia_inv.csv") #path to dataset5
