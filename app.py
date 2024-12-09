@@ -4,74 +4,86 @@ import pandas as pd
 import streamlit as st
 from groq import Groq
 
-
-# df1=pd.read_csv("dataset/amazon_inv.csv") #path to dataset1
-# df2=pd.read_csv("dataset/apple_inv.csv") #path to dataset2
-# df3=pd.read_csv("dataset/meta_inv.csv") #path to dataset3
-# df4=pd.read_csv("dataset/ndx_inv.csv") #path to dataset4
-# df5=pd.read_csv("dataset/nvidia_inv.csv") #path to dataset5
-
-# df1_sample = df1.to_string(index=False)
-# df2_sample = df2.to_string(index=False)
-# df3_sample = df3.to_string(index=False)
-# df4_sample = df4.to_string(index=False)
-# df5_sample = df5.to_string(index=False)
-# # df=df1_sample+df2_sample+df3_sample+df4_sample+df5_sample
-
-# df = f"{df1_sample}\n\n{df2_sample}\n\n{df3_sample}\n\n{df4_sample}\n\n{df5_sample}"
-
-# print(df)
-
 st.set_page_config(
     page_title="Blog Generater",
     page_icon="🦙",
     layout="centered"
 )
 
+# Add custom CSS for sticky dropdowns
+st.markdown(
+    """
+    <style>
+    .sticky-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background-color: white;
+        padding: 10px 0;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .content-container {
+        margin-top: 120px; /* Space for the sticky container */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Load configuration
 working_dir = os.path.dirname(os.path.abspath(__file__))
 config_data = json.load(open(f"{working_dir}/config.json"))
 
 GROQ_API_KEY = config_data["GROQ_API_KEY"]
-
 os.environ["GROQ_API_KEY"] = GROQ_API_KEY
 
 client = Groq()
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-
+# Sticky container for dropdowns
+st.markdown('<div class="sticky-container">', unsafe_allow_html=True)
 st.title("Blogify AI")
+# with st.container():
+#     col1, col2, col3 = st.columns([5, 2, 2])
 
-# url = "https://discuss.streamlit.io/t/streamlit-hyperlink/29831"
-# st.write("Check of visualizations(%s)" % url)
+#     with col3:
+        
+#     with col2:
+        
+st.markdown('</div>', unsafe_allow_html=True)
 
-
+# Content container for chat history and input
+st.markdown('<div class="content-container">', unsafe_allow_html=True)
 for message in st.session_state.chat_history:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
 user_prompt = st.chat_input("Ask LLAMA...")
+word_limit = st.selectbox(
+            "Word Limit",
+            options=[50, 100, 200, 300, 500],
+            index=1,
+            label_visibility="collapsed"
+        )
+
+role = st.selectbox(
+            "Role",
+            options=['Researcher', 'Student', 'Teacher', 'Analyst'],
+            index=1,
+            label_visibility="collapsed"
+        )
 
 if user_prompt:
     st.chat_message("user").markdown(user_prompt)
     st.session_state.chat_history.append({"role": "user", "content": user_prompt})
 
     messages = [
-        {"role": "system", "content": """
-        You are a skilled blog writer and SEO expert. Your task is to create a blog title and a detailed blog based on the given input. 
-
-        Input: {user_input}
-
-        1. Generate an engaging, SEO-friendly title for the blog. Ensure it is concise and appealing to the target audience. 
-        2. Write a comprehensive blog based on the input, including:
-            - An attention-grabbing introduction that sets the context.
-            - Well-structured body content divided into clear subheadings.
-            - A conclusion summarizing the key points and providing a call-to-action if applicable.
-        3. Ensure the tone is professional and informative. Aim for readability and value to the reader.
-
-        Begin by providing the title, followed by the blog content.
-        """
-            },
+        {"role": "system", "content": f"""
+        Give me an entire blog on the topic '{user_prompt}' with approximately {word_limit} words and considering the role as '{role}'.
+        """},
         *st.session_state.chat_history
     ]
 
@@ -85,3 +97,4 @@ if user_prompt:
 
     with st.chat_message("assistant"):
         st.markdown(assistant_response)
+st.markdown('</div>', unsafe_allow_html=True)
