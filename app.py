@@ -53,28 +53,28 @@ st.title("Blogify AI")
         
 #     with col2:
         
-st.markdown('</div>', unsafe_allow_html=True)
+# st.markdown('</div>', unsafe_allow_html=True)
 
-# Content container for chat history and input
-st.markdown('<div class="content-container">', unsafe_allow_html=True)
-for message in st.session_state.chat_history:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+# # Content container for chat history and input
+# st.markdown('<div class="content-container">', unsafe_allow_html=True)
+# for message in st.session_state.chat_history:
+#     with st.chat_message(message["role"]):
+#         st.markdown(message["content"])
 
 user_prompt = st.chat_input("Ask LLAMA...")
-word_limit = st.selectbox(
-            "Word Limit",
-            options=[50, 100, 200, 300, 500],
-            index=1,
-            label_visibility="collapsed"
-        )
+# word_limit = st.selectbox(
+#             "Word Limit",
+#             options=[50, 100, 200, 300, 500],
+#             index=1,
+#             label_visibility="collapsed"
+#         )
 
-role = st.selectbox(
-            "Role",
-            options=['Researcher', 'Student', 'Teacher', 'Analyst'],
-            index=1,
-            label_visibility="collapsed"
-        )
+# role = st.selectbox(
+#             "Role",
+#             options=['Researcher', 'Student', 'Teacher', 'Analyst'],
+#             index=1,
+#             label_visibility="collapsed"
+#         )
 
 if user_prompt:
     st.chat_message("user").markdown(user_prompt)
@@ -82,7 +82,7 @@ if user_prompt:
 
     messages = [
         {"role": "system", "content": f"""
-        Give me an entire blog on the topic '{user_prompt}' with approximately {word_limit} words and considering the role as '{role}'.
+            You are a Financial AI assistant Give the information about {user_prompt} in financial manner.
         """},
         *st.session_state.chat_history
     ]
